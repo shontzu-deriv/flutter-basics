@@ -21,7 +21,8 @@ void main() {
   runApp(MaterialApp(
     title: "Flutter Demo",
     theme: ThemeData(
-      primaryColor: Colors.blue,
+      primaryColor:
+          Colors.blue, //this gets overridden by the styles in Scaffold
     ),
     home: Homepage(),
   ));
@@ -64,13 +65,102 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  int _counter = 0;
+  int _curIndex = 0;
+
+  _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
+    });
+  }
+
+  void _resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    // return Container();
-    return const Center(child: Text("Homepage"));
-    //TODO
-    // return const Center(child: Column(
-    //   children: const <Widget> [],
-    // ));
+    // return const Center(child: Text("Homepage"));
+    // return Column(
+    //   children: const <Widget>[
+    //     Text('Line 1'),
+    //     Text('Line 2'),
+    //   ],
+    // );
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('COUNTER APP'),
+        centerTitle: true,
+        backgroundColor: Colors.amber,
+        foregroundColor: Colors.black,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'Line 1',
+            ),
+            const Text('Line 2'),
+            Text('Count is $_counter'),
+          ],
+        ),
+      ),
+
+      // floatingActionButton: FloatingActionButton(
+      //     backgroundColor: Colors.amber,
+      //     foregroundColor: Colors.black,
+      //     onPressed: _incrementCounter,
+      //     child: const Icon(Icons.add)),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+              backgroundColor: Colors.amber,
+              foregroundColor: Colors.black,
+              onPressed: _incrementCounter,
+              child: const Icon(Icons.add)),
+          FloatingActionButton(
+              backgroundColor: Colors.amber,
+              foregroundColor: Colors.black,
+              onPressed: _decrementCounter,
+              child: const Icon(Icons.remove)),
+          FloatingActionButton(
+              backgroundColor: Colors.amber,
+              foregroundColor: Colors.black,
+              onPressed: _resetCounter,
+              child: const Icon(Icons.refresh)),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+              ),
+              label: "home"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.search,
+              ),
+              label: "search",
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.phone,
+              ),
+              label: "contact"),
+        ],
+        currentIndex: _curIndex,
+      ),
+    );
   }
 }
